@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { TodoType } from 'src/types/types';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import AddTodo from 'src/components/AddTodo/AddTodo';
@@ -8,12 +9,12 @@ interface TodoListProps {}
 function TodoList() {
   const [todos, setTodos] = useState<TodoType[]>([
     {
-      id: 1,
+      id: uuidv4(),
       text: '공부하기',
       status: 'active',
     },
     {
-      id: 2,
+      id: uuidv4(),
       text: '저녁먹기',
       status: 'unActive',
     },

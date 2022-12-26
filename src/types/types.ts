@@ -1,5 +1,5 @@
 export interface TodoType {
-  id: number;
+  id: string;
   text: string;
   status: string;
 }
