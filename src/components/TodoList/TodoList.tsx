@@ -1,12 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { TodoType } from 'src/types/types';
+import { filterType, TodoType } from 'src/types/types';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import AddTodo from 'src/components/AddTodo/AddTodo';
 
-interface TodoListProps {}
+interface TodoListProps {
+  filter: filterType;
+}
 
-function TodoList() {
+function TodoList({ filter }: TodoListProps) {
   const [todos, setTodos] = useState<TodoType[]>([
     {
       id: uuidv4(),
@@ -41,10 +43,15 @@ function TodoList() {
     [todos]
   );
 
+  const filteredTodos = useMemo(() => {
+    if (filter === 'all') return todos;
+    return todos.filter(todo => todo.status === filter);
+  }, [filter, todos]);
+
   return (
     <>
       <ul className='todoWrapper'>
-        {todos.map(todo => (
+        {filteredTodos.map(todo => (
           <TodoListItem key={todo.id} todo={todo} onUpdate={handleUpdate} onDelete={handleDelete} />
         ))}
       </ul>

@@ -3,3 +3,5 @@ export interface TodoType {
   text: string;
   status: string;
 }
+
+export type filterType = 'all' | 'active' | 'completed';
