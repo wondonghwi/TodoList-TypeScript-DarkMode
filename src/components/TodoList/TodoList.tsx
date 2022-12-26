@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { filterType, TodoType } from 'src/types/types';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import AddTodo from 'src/components/AddTodo/AddTodo';
@@ -10,18 +9,9 @@ interface TodoListProps {
 }
 
 function TodoList({ filter }: TodoListProps) {
-  const [todos, setTodos] = useState<TodoType[]>([
-    {
-      id: uuidv4(),
-      text: '공부하기',
-      status: 'active',
-    },
-    {
-      id: uuidv4(),
-      text: '저녁먹기',
-      status: 'completed',
-    },
-  ]);
+  // NOTE : 초기값을 함수로 놓아서 함수가 마운트될때 딱한번만 호출되도록 한다.
+  // -> 콜백함수를 전달하기때문
+  const [todos, setTodos] = useState<TodoType[]>(() => readTodosLocalStorage());
 
   const handleAdd = useCallback(
     (todo: TodoType) => {
@@ -49,6 +39,10 @@ function TodoList({ filter }: TodoListProps) {
     return todos.filter(todo => todo.status === filter);
   }, [filter, todos]);
 
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+
   return (
     <section className={styles.container}>
       <ul className={styles.list}>
@@ -62,3 +56,8 @@ function TodoList({ filter }: TodoListProps) {
 }
 
 export default TodoList;
+
+const readTodosLocalStorage = () => {
+  const todos = localStorage.getItem('todos');
+  return todos ? JSON.parse(todos) : [];
+};
