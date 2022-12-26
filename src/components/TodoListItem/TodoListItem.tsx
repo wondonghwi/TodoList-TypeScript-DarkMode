@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { TodoType } from 'src/types/types';
+import styles from './TodoListItem.module.css';
 
 interface TodoListItemProps {
   todo: TodoType;
@@ -13,7 +14,6 @@ function TodoListItem({ todo, onUpdate, onDelete }: TodoListItemProps) {
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(e.target);
       const status = e.target.checked ? 'completed' : 'active';
       onUpdate({ ...todo, status });
     },
@@ -21,12 +21,22 @@ function TodoListItem({ todo, onUpdate, onDelete }: TodoListItemProps) {
   );
 
   return (
-    <li>
-      <input type='checkbox' id={id} checked={status === 'completed'} onChange={handleChange} />
-      <label htmlFor={id}>{text}</label>
-      <button onClick={() => onDelete(todo)}>
-        <FaTrashAlt />
-      </button>
+    <li className={styles.todo}>
+      <input
+        className={styles.checkbox}
+        type='checkbox'
+        id={id}
+        checked={status === 'completed'}
+        onChange={handleChange}
+      />
+      <label className={styles.text} htmlFor={id}>
+        {text}
+      </label>
+      <span className={styles.icon}>
+        <button className={styles.button} onClick={() => onDelete(todo)}>
+          <FaTrashAlt />
+        </button>
+      </span>
     </li>
   );
 }

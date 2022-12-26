@@ -1,0 +1,13 @@
+.container {
+  height: 100%;
+  /*지정하지않으면 item이 많을때 top,bottom영역이사라짐*/
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+}
+
+.list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}

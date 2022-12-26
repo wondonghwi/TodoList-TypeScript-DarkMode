@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { filterType, TodoType } from 'src/types/types';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import AddTodo from 'src/components/AddTodo/AddTodo';
+import styles from './TodoList.module.css';
 
 interface TodoListProps {
   filter: filterType;
@@ -49,14 +50,14 @@ function TodoList({ filter }: TodoListProps) {
   }, [filter, todos]);
 
   return (
-    <>
-      <ul>
+    <section className={styles.container}>
+      <ul className={styles.list}>
         {filteredTodos.map(todo => (
           <TodoListItem key={todo.id} todo={todo} onUpdate={handleUpdate} onDelete={handleDelete} />
         ))}
       </ul>
       <AddTodo onAdd={handleAdd} />
-    </>
+    </section>
   );
 }
 
