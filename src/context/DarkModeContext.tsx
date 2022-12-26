@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 
 const DarkModeContext = createContext({
   darkMode: false,
-  toggleDarkMode() {},
+  toggleDarkMode: () => {},
 });
 
 interface DarModeProvider {
