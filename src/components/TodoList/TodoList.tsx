@@ -16,13 +16,27 @@ function TodoList() {
     {
       id: uuidv4(),
       text: '저녁먹기',
-      status: 'unActive',
+      status: 'completed',
     },
   ]);
 
-  const onAdd = useCallback(
+  const handleAdd = useCallback(
     (todo: TodoType) => {
       setTodos([...todos, todo]);
+    },
+    [todos]
+  );
+
+  const handleUpdate = useCallback(
+    (todo: TodoType) => {
+      setTodos(todos.map(item => (item.id === todo.id ? todo : item)));
+    },
+    [todos]
+  );
+
+  const handleDelete = useCallback(
+    (todo: TodoType) => {
+      setTodos(todos.filter(item => item.id !== todo.id));
     },
     [todos]
   );
@@ -31,11 +45,10 @@ function TodoList() {
     <>
       <ul className='todoWrapper'>
         {todos.map(todo => (
-          <TodoListItem key={todo.id} todo={todo} />
-          // <TodoListItem key={todo.id} todo={todo} toggleItem={toggleItem} deleteItem={deleteItem} />
+          <TodoListItem key={todo.id} todo={todo} onUpdate={handleUpdate} onDelete={handleDelete} />
         ))}
       </ul>
-      <AddTodo onAdd={onAdd} />
+      <AddTodo onAdd={handleAdd} />
     </>
   );
 }

@@ -1,22 +1,32 @@
-import React from 'react';
-import { FaRegCheckCircle, FaRegCircle, FaTrash } from 'react-icons/fa';
+import React, { useCallback } from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
 import { TodoType } from 'src/types/types';
 
 interface TodoListItemProps {
   todo: TodoType;
-  // toggleItem: (id: number) => void;
-  // deleteItem: (id: number) => void;
+  onUpdate: (todo: TodoType) => void;
+  onDelete: (todo: TodoType) => void;
 }
 
-function TodoListItem({ todo }: TodoListItemProps) {
+function TodoListItem({ todo, onUpdate, onDelete }: TodoListItemProps) {
   const { id, text, status } = todo;
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target);
+      const status = e.target.checked ? 'completed' : 'active';
+      onUpdate({ ...todo, status });
+    },
+    [onUpdate, todo]
+  );
+
   return (
-    <li className='TodoListItem'>
-      <div>{status ? <FaRegCheckCircle /> : <FaRegCircle />}</div>
-      {/*<div onClick={() => toggleItem(id)}>{status ? <FaRegCheckCircle /> : <FaRegCircle />}</div>*/}
-      <span>{text}</span>
-      <FaTrash />
-      {/*<FaTrash onClick={() => deleteItem(id)} />*/}
+    <li>
+      <input type='checkbox' id={id} checked={status === 'completed'} onChange={handleChange} />
+      <label htmlFor={id}>{text}</label>
+      <button onClick={() => onDelete(todo)}>
+        <FaTrashAlt />
+      </button>
     </li>
   );
 }
