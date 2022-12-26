@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 const DarkModeContext = createContext({
   darkMode: false,
@@ -26,7 +26,10 @@ export function DarkModeProvider({ children }: DarModeProvider) {
     updateDarkMode(isDark);
   }, []);
 
-  return <DarkModeContext.Provider value={{ darkMode, toggleDarkMode }}>{children}</DarkModeContext.Provider>;
+  // NOTE : 컴포넌트가 리렌더링 될때마다 새로만들지않고 재사용 할 수 있도록 useMemo로 감싸기
+  const value = useMemo(() => ({ darkMode, toggleDarkMode }), [darkMode, toggleDarkMode]);
+
+  return <DarkModeContext.Provider value={value}>{children}</DarkModeContext.Provider>;
 }
 
 function updateDarkMode(darkMode: boolean) {
