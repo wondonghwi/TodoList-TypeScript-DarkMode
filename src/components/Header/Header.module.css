@@ -1,9 +1,23 @@
 .header {
+  padding: 0 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--color-bg-dark);
   border-bottom: 1px solid var(--color-grey);
+}
+
+.toggle {
+  font-size: 1.5rem;
+  color: var(--color-text);
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3ms ease-out;
+}
+
+.toggle.hover {
+  transform: scale(1.1);
+  color: var(--color-accent);
 }
 
 .filters {

@@ -3,6 +3,7 @@ import './styles/App.css';
 import TodoList from './components/TodoList/TodoList';
 import { filterType } from 'src/types/types';
 import Header from 'src/components/Header/Header';
+import { DarkModeProvider } from './context/DarkModeContext';
 
 const filters: filterType[] = ['all', 'active', 'completed'];
 
@@ -11,7 +12,9 @@ const App = () => {
 
   return (
     <>
-      <Header filters={filters} filter={filter} onFilterChange={setFilter} />
+      <DarkModeProvider>
+        <Header filters={filters} filter={filter} onFilterChange={setFilter} />
+      </DarkModeProvider>
       <TodoList filter={filter} />
     </>
   );
