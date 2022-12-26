@@ -10,11 +10,9 @@ const App = () => {
   const [filter, setFilter] = useState<filterType>(filters[0]);
 
   return (
-    <div className='App'>
-      <div className='backgound'>
-        <Header filters={filters} filter={filter} onFilterChange={setFilter} />
-        <TodoList filter={filter} />
-      </div>
+    <div>
+      <Header filters={filters} filter={filter} onFilterChange={setFilter} />
+      <TodoList filter={filter} />
     </div>
   );
 };

@@ -50,7 +50,7 @@ function TodoList({ filter }: TodoListProps) {
 
   return (
     <>
-      <ul className='todoWrapper'>
+      <ul>
         {filteredTodos.map(todo => (
           <TodoListItem key={todo.id} todo={todo} onUpdate={handleUpdate} onDelete={handleDelete} />
         ))}

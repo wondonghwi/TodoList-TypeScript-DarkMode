@@ -24,7 +24,7 @@ function AddTodo({ onAdd }: AddButtonProps) {
   }, []);
 
   return (
-    <form className='addForm' onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <input name='item' type='text' placeholder='Add Todo' onChange={handleChange} value={text} />
       <button type='submit'>Add</button>
     </form>
